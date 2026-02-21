@@ -12,10 +12,10 @@ import {
   Moon,
   Sun,
   ChevronLeft,
-  ChevronRight,
   Menu,
   X,
   LogOut,
+  Sparkles,
 } from 'lucide-react';
 import type { Page } from '../types';
 import { notifications } from '../mockData';
@@ -27,14 +27,14 @@ interface SidebarProps {
   onToggleDark: () => void;
 }
 
-const navItems: { id: Page; label: string; icon: React.ReactNode }[] = [
+const navItems: { id: Page; label: string; icon: React.ReactNode; emoji?: string }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
   { id: 'patients', label: 'Pacientes', icon: <Users size={20} /> },
   { id: 'appointments', label: 'Agenda', icon: <Calendar size={20} /> },
   { id: 'pipeline', label: 'Pipeline', icon: <Columns3 size={20} /> },
   { id: 'financial', label: 'Financeiro', icon: <DollarSign size={20} /> },
   { id: 'treatments', label: 'Tratamentos', icon: <Stethoscope size={20} /> },
-  { id: 'insights', label: 'Insights & IA', icon: <Brain size={20} /> },
+  { id: 'insights', label: 'Insights & IA', icon: <Brain size={20} />, emoji: '✨' },
   { id: 'notifications', label: 'Notificações', icon: <Bell size={20} /> },
   { id: 'settings', label: 'Configurações', icon: <Settings size={20} /> },
 ];
@@ -42,28 +42,35 @@ const navItems: { id: Page; label: string; icon: React.ReactNode }[] = [
 export default function Sidebar({ currentPage, onNavigate, darkMode, onToggleDark }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const sidebarContent = (
-    <div className={`flex flex-col h-full ${collapsed ? 'w-[72px]' : 'w-64'} transition-all duration-300`}>
+  const sidebarContent = (isMobile = false) => (
+    <div className={`flex flex-col h-full ${collapsed && !isMobile ? 'w-[76px]' : 'w-[260px]'} transition-all duration-400 ease-out`}>
       {/* Logo */}
-      <div className="flex items-center gap-3 px-4 py-5 border-b border-slate-200 dark:border-slate-700/50">
-        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-dental-500 text-white font-bold text-lg shrink-0">
-          🦷
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-slate-100 dark:border-slate-800/80">
+        <div className="relative flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-500 via-primary-600 to-dental-500 text-white font-bold text-lg shrink-0 shadow-lg shadow-primary-500/20 animate-gradient">
+          <span className="text-lg">🦷</span>
+          <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white dark:border-slate-900" />
         </div>
-        {!collapsed && (
-          <div className="animate-fade-in">
-            <h1 className="font-bold text-base text-slate-900 dark:text-white leading-tight">Odonto Pro</h1>
-            <p className="text-[11px] text-slate-400 dark:text-slate-500">CRM Inteligente</p>
+        {(collapsed && !isMobile) ? null : (
+          <div className="animate-fade-in overflow-hidden">
+            <h1 className="font-extrabold text-[15px] text-slate-900 dark:text-white leading-tight tracking-tight">
+              Odonto Pro
+            </h1>
+            <p className="text-[10px] text-slate-400 dark:text-slate-600 font-medium flex items-center gap-1">
+              <Sparkles size={9} /> CRM Inteligente
+            </p>
           </div>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
-        {navItems.map((item) => {
+      <nav className="flex-1 py-3 px-2.5 space-y-0.5 overflow-y-auto">
+        {navItems.map((item, index) => {
           const isActive = currentPage === item.id;
+          const isHovered = hoveredItem === item.id;
           return (
             <button
               key={item.id}
@@ -71,25 +78,35 @@ export default function Sidebar({ currentPage, onNavigate, darkMode, onToggleDar
                 onNavigate(item.id);
                 setMobileOpen(false);
               }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 relative group
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
+              className={`sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold relative group btn-press
                 ${isActive
-                  ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ? 'active bg-gradient-to-r from-primary-50 to-primary-50/50 dark:from-primary-500/10 dark:to-primary-500/5 text-primary-600 dark:text-primary-400 shadow-sm shadow-primary-100 dark:shadow-none'
+                  : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
-              title={collapsed ? item.label : undefined}
+              style={{ animationDelay: `${index * 0.03}s` }}
+              title={collapsed && !isMobile ? item.label : undefined}
             >
-              <span className={`shrink-0 ${isActive ? 'text-primary-500 dark:text-primary-400' : ''}`}>
+              <span className={`shrink-0 transition-all duration-300 ${isActive ? 'text-primary-500 dark:text-primary-400 scale-110' : isHovered ? 'scale-110' : ''}`}>
                 {item.icon}
               </span>
-              {!collapsed && <span>{item.label}</span>}
+              {(collapsed && !isMobile) ? null : (
+                <span className="animate-fade-in truncate">{item.label}</span>
+              )}
+              {item.emoji && !(collapsed && !isMobile) && (
+                <span className="ml-auto text-[10px] animate-float-soft">{item.emoji}</span>
+              )}
               {item.id === 'notifications' && unreadCount > 0 && (
-                <span className={`${collapsed ? 'absolute top-1 right-1' : 'ml-auto'} bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center`}>
+                <span className={`${collapsed && !isMobile ? 'absolute -top-0.5 -right-0.5' : 'ml-auto'} bg-red-500 text-white text-[9px] font-bold rounded-full w-[18px] h-[18px] flex items-center justify-center shadow-sm shadow-red-300 dark:shadow-red-900 animate-pulse-ring`}>
                   {unreadCount}
                 </span>
               )}
-              {collapsed && (
-                <div className="absolute left-full ml-2 px-2 py-1 bg-slate-900 dark:bg-slate-700 text-white text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
+              {/* Tooltip when collapsed */}
+              {collapsed && !isMobile && (
+                <div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-900 dark:bg-slate-700 text-white text-xs font-medium rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 shadow-xl pointer-events-none">
                   {item.label}
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-slate-900 dark:bg-slate-700 rotate-45" />
                 </div>
               )}
             </button>
@@ -98,38 +115,47 @@ export default function Sidebar({ currentPage, onNavigate, darkMode, onToggleDar
       </nav>
 
       {/* Bottom section */}
-      <div className="border-t border-slate-200 dark:border-slate-700/50 p-3 space-y-2">
+      <div className="border-t border-slate-100 dark:border-slate-800/80 p-2.5 space-y-1">
+        {/* Dark mode */}
         <button
           onClick={onToggleDark}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          title={collapsed ? (darkMode ? 'Modo Claro' : 'Modo Escuro') : undefined}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all duration-300 btn-press"
+          title={collapsed && !isMobile ? (darkMode ? 'Modo Claro' : 'Modo Escuro') : undefined}
         >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-          {!collapsed && <span>{darkMode ? 'Modo Claro' : 'Modo Escuro'}</span>}
+          <span className="shrink-0 transition-transform duration-500" style={{ transform: darkMode ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+            {darkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} />}
+          </span>
+          {(collapsed && !isMobile) ? null : (
+            <span className="animate-fade-in">{darkMode ? 'Modo Claro' : 'Modo Escuro'}</span>
+          )}
         </button>
 
         {/* Collapse button - desktop only */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-        >
-          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-          {!collapsed && <span>Recolher</span>}
-        </button>
+        {!isMobile && (
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="hidden lg:flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all duration-300 btn-press"
+          >
+            <span className="shrink-0 transition-transform duration-400" style={{ transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+              <ChevronLeft size={20} />
+            </span>
+            {!collapsed && <span className="animate-fade-in">Recolher</span>}
+          </button>
+        )}
 
-        {/* User */}
-        <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 ${collapsed ? 'justify-center' : ''}`}>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-dental-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+        {/* User Card */}
+        <div className={`flex items-center gap-3 px-3 py-3 rounded-xl bg-gradient-to-r from-slate-50 to-slate-50/50 dark:from-slate-800/60 dark:to-slate-800/30 border border-slate-100 dark:border-slate-800 transition-all duration-300 ${collapsed && !isMobile ? 'justify-center' : ''}`}>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-400 via-primary-500 to-dental-500 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-md shadow-primary-300/30 dark:shadow-primary-900/30">
             AC
           </div>
-          {!collapsed && (
+          {(collapsed && !isMobile) ? null : (
             <div className="flex-1 min-w-0 animate-fade-in">
-              <p className="text-sm font-medium text-slate-900 dark:text-white truncate">Admin Clínica</p>
-              <p className="text-[11px] text-slate-400 truncate">Clínica Sorriso</p>
+              <p className="text-[13px] font-semibold text-slate-800 dark:text-white truncate">Admin Clínica</p>
+              <p className="text-[10px] text-slate-400 dark:text-slate-600 truncate font-medium">Clínica Sorriso</p>
             </div>
           )}
-          {!collapsed && (
-            <button className="text-slate-400 hover:text-red-500 transition-colors shrink-0">
+          {(collapsed && !isMobile) ? null : (
+            <button className="text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 transition-all duration-300 shrink-0 hover:rotate-12">
               <LogOut size={16} />
             </button>
           )}
@@ -143,7 +169,7 @@ export default function Sidebar({ currentPage, onNavigate, darkMode, onToggleDar
       {/* Mobile menu button */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-xl bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-2xl glass shadow-lg text-slate-600 dark:text-slate-300 btn-press hover:scale-105 transition-transform duration-200"
       >
         <Menu size={20} />
       </button>
@@ -151,22 +177,22 @@ export default function Sidebar({ currentPage, onNavigate, darkMode, onToggleDar
       {/* Mobile overlay */}
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
-          <div className="relative h-full w-64 bg-white dark:bg-slate-900 shadow-2xl animate-slide-in">
+          <div className="overlay-backdrop absolute inset-0" onClick={() => setMobileOpen(false)} />
+          <div className="relative h-full w-[260px] bg-white dark:bg-slate-900 shadow-2xl animate-slide-in-left">
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all z-10"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
-            {sidebarContent}
+            {sidebarContent(true)}
           </div>
         </div>
       )}
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block h-screen sticky top-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700/50 shadow-sm">
-        {sidebarContent}
+      <aside className="hidden lg:block h-screen sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-100 dark:border-slate-800/80 transition-all duration-400 z-20">
+        {sidebarContent(false)}
       </aside>
     </>
   );

@@ -388,12 +388,12 @@ export default function Treatments() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[100]"
             onClick={() => setSelectedTreatment(null)}
           />
 
           {/* Panel */}
-          <div className="fixed top-0 right-0 h-full w-full max-w-lg bg-white dark:bg-slate-900 shadow-2xl z-50 overflow-y-auto animate-slide-in-right border-l border-slate-200 dark:border-slate-700">
+          <div className="fixed top-0 right-0 h-full w-full max-w-lg bg-white dark:bg-slate-900 shadow-2xl z-[101] overflow-y-auto animate-slide-in-right border-l border-slate-200 dark:border-slate-700">
             {/* Header */}
             <div className={`bg-gradient-to-r ${getCatColor(selectedTreatment.category).gradient} p-6 relative`}>
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
@@ -685,10 +685,10 @@ export default function Treatments() {
       {showEditModal && editingTreatment && (
         <>
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[110]"
             onClick={() => { setShowEditModal(false); setEditingTreatment(null); }}
           />
-          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[111] flex items-center justify-center p-4">
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-700 animate-fade-in">
               {/* Modal Header */}
               <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">

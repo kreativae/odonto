@@ -567,7 +567,7 @@ export default function Appointments() {
 
       {/* ══════════════ QUICK VIEW PANEL ══════════════ */}
       {quickViewApt && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setQuickViewApt(null)} />
           <div className="relative w-full max-w-md h-full bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header band with color */}
@@ -743,7 +743,7 @@ export default function Appointments() {
 
       {/* ══════════════ EDIT MODAL ══════════════ */}
       {editApt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 animate-fade-in">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setEditApt(null)} />
           <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto animate-slide-in">
             <div className="sticky top-0 bg-white dark:bg-slate-800 z-10 flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-700">

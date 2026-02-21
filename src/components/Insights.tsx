@@ -754,7 +754,7 @@ export default function Insights() {
 
       {/* ══════════════ AI RESULT PANEL ══════════════ */}
       {showResult && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => { setShowResult(false); setSelectedQuery(null); }} />
           <div className="relative w-full max-w-xl h-full bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header */}

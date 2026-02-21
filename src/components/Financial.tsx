@@ -33,30 +33,30 @@ export default function Financial() {
   const maxRevenue = Math.max(...revenueData.map(d => d.value));
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 page-enter">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-slide-in">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Financeiro</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Financeiro</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">
             Controle completo de receitas, despesas e fluxo de caixa
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-            <Download size={18} />
-            Exportar
+          <button className="inline-flex items-center gap-2 px-4 py-2.5 glass-card rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all btn-press">
+            <Download size={16} />
+            <span className="hidden sm:inline">Exportar</span>
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-primary-600/25">
-            <DollarSign size={18} />
+          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-500/25 btn-press btn-glow">
+            <DollarSign size={16} />
             Nova Transação
           </button>
         </div>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+        <div className="glass-card rounded-2xl p-4 sm:p-5 card-hover animate-pop-in stagger-1">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-500/10">
               <Wallet size={20} className="text-emerald-500" />
@@ -66,11 +66,11 @@ export default function Financial() {
               +12.5%
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">R$ {totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-          <p className="text-xs text-slate-400 mt-1">Receitas do mês</p>
+          <p className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white stat-value">R$ {totalIncome.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+          <p className="text-[10px] sm:text-xs text-slate-400 mt-1 font-medium">Receitas do mês</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50">
+        <div className="glass-card rounded-2xl p-4 sm:p-5 card-hover animate-pop-in stagger-2">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-500/10">
               <CreditCard size={20} className="text-red-500" />
@@ -80,11 +80,11 @@ export default function Financial() {
               -3.2%
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">R$ {totalExpense.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-          <p className="text-xs text-slate-400 mt-1">Despesas do mês</p>
+          <p className="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white stat-value">R$ {totalExpense.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+          <p className="text-[10px] sm:text-xs text-slate-400 mt-1 font-medium">Despesas do mês</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50">
+        <div className="glass-card rounded-2xl p-4 sm:p-5 card-hover animate-pop-in stagger-3">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-500/10">
               <PiggyBank size={20} className="text-blue-500" />

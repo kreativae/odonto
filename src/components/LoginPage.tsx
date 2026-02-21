@@ -233,13 +233,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
     ) : null;
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-50 via-white to-primary-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map(p => (
           <div
             key={p.id}
-            className="absolute rounded-full bg-primary-400/20 dark:bg-primary-400/10"
+            className="absolute rounded-full bg-primary-400/15 dark:bg-primary-400/8"
             style={{
               width: p.size + 'px',
               height: p.size + 'px',
@@ -249,13 +249,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             }}
           />
         ))}
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-primary-400/20 to-dental-400/20 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-gradient-to-br from-dental-400/20 to-primary-400/20 blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary-400/15 to-dental-400/15 blur-3xl animate-float-soft" />
+        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-dental-400/15 to-primary-400/15 blur-3xl animate-float-soft" style={{ animationDelay: '1.5s' }} />
       </div>
 
       {/* LEFT PANEL – Hero / Features */}
       <div className="hidden lg:flex flex-col justify-between w-[55%] xl:w-[50%] relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-dental-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-dental-700 animate-gradient" />
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
             <defs>
@@ -298,13 +298,13 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             {features.map((feat, i) => (
               <div
                 key={i}
-                className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:bg-white/15 transition-colors group"
+                className={`bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:bg-white/20 transition-all duration-300 group card-hover animate-pop-in stagger-${i + 1}`}
               >
-                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300">
                   <feat.icon size={20} className="text-white" />
                 </div>
-                <h3 className="text-white font-semibold text-sm mb-1">{feat.label}</h3>
-                <p className="text-white/50 text-xs">{feat.desc}</p>
+                <h3 className="text-white font-bold text-sm mb-1">{feat.label}</h3>
+                <p className="text-white/50 text-xs font-medium">{feat.desc}</p>
               </div>
             ))}
           </div>
@@ -341,7 +341,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
       {/* RIGHT PANEL – Forms */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12 relative z-10">
-        <div className={`w-full max-w-md transition-all duration-400 ${animating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+        <div className={`w-full max-w-md transition-all duration-500 ease-out ${animating ? 'opacity-0 translate-y-6 scale-98' : 'opacity-100 translate-y-0 scale-100'}`}>
 
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8 justify-center">
@@ -451,7 +451,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               <button
                 onClick={handleLogin}
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-60 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 active:scale-[0.98]"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-60 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/40 btn-press btn-glow"
               >
                 {loading ? (
                   <div className="flex items-center gap-2">

@@ -316,7 +316,7 @@ export default function Patients() {
 
       {/* ==================== QUICK VIEW PANEL ==================== */}
       {quickViewPatient && !subPanel && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setQuickViewPatient(null)} />
           <div className="relative w-full max-w-lg bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header */}
@@ -525,7 +525,7 @@ export default function Patients() {
 
       {/* ==================== AGENDAR CONSULTA PANEL ==================== */}
       {quickViewPatient && subPanel === 'agendar' && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setSubPanel(null)} />
           <div className="relative w-full max-w-lg bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header */}
@@ -731,7 +731,7 @@ export default function Patients() {
 
       {/* ==================== PRONTUÁRIO PANEL ==================== */}
       {quickViewPatient && subPanel === 'prontuario' && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setSubPanel(null)} />
           <div className="relative w-full max-w-lg bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header */}
@@ -1001,7 +1001,7 @@ export default function Patients() {
 
       {/* ==================== FINANCEIRO PANEL ==================== */}
       {quickViewPatient && subPanel === 'financeiro' && (
-        <div className="fixed inset-0 z-50 flex justify-end animate-fade-in">
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setSubPanel(null)} />
           <div className="relative w-full max-w-lg bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto animate-slide-in-right">
             {/* Header */}
@@ -1232,7 +1232,7 @@ export default function Patients() {
 
       {/* ==================== EDIT / NEW PATIENT MODAL ==================== */}
       {showForm && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 animate-fade-in">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowForm(false)} />
           <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-slide-in">
             <div className="sticky top-0 z-10 bg-white dark:bg-slate-800 flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
